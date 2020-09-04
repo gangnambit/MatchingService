@@ -53,10 +53,15 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage(props) {
   const classes = useStyles();
 
+  const rememberMeChecked = localStorage.getItem("rememberme") ? true : false;
+
   const dispatch = useDispatch();
 
-  const [Email, setEmail] = useState("");
+  const [Email, setEmail] = useState(
+    rememberMeChecked ? localStorage.getItem("rememberme") : ""
+  );
   const [Password, setPassword] = useState("");
+  const [RememberMe, setRememberMe] = useState(rememberMeChecked);
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -76,27 +81,36 @@ export default function LoginPage(props) {
 
     dispatch(loginUser(body)).then((response) => {
       if (response.payload.loginSuccess) {
+        if (RememberMe === true) {
+          window.localStorage.setItem("rememberme", response.payload.email);
+        } else {
+          localStorage.removeItem("rememberme");
+        }
         props.history.push("/");
       } else {
         alert("Fail");
       }
     });
-
   };
-      const responseKaKao = (response) => {
-        const data = response;
-        axios.post("http://localhost:5000/api/users/kakaologin", data, {
-          withCredentials: true,
-        }).then((response) => {
-          if (response.data.loginSuccess) {
-            window.localStorage.setItem("userId", response.data.userId);
-            props.history.push("/");
-          } else {
-            alert("로그인 실패");
-          }
-        });
-      };
-
+  const responseKaKao = (response) => {
+    const data = response;
+    axios
+      .post("http://localhost:5000/api/users/kakaologin", data, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.loginSuccess) {
+          localStorage.setItem("userId", response.data.userId);
+          props.history.push("/");
+        } else {
+          alert("로그인 실패");
+        }
+      });
+  };
+  const onRememberMeHandler = () => {
+    // console.log(123);
+    setRememberMe(!RememberMe);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -135,7 +149,10 @@ export default function LoginPage(props) {
             autoComplete="current-password"
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            onChange={onRememberMeHandler}
+            control={
+              <Checkbox value="remember" color="primary" checked={RememberMe} />
+            }
             label="Remember me"
           />
           <Button

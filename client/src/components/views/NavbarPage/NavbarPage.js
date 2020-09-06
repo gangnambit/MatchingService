@@ -16,6 +16,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Link from '@material-ui/core/Link';
 const useStyles = makeStyles((theme) => ({
+  bar: {
+    backgroundColor: "#568ea6"
+  },
   grow: {
     flexGrow: 1,
   },
@@ -174,7 +177,7 @@ export default function NavbarPage() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.bar}>
         <Toolbar>
           <IconButton
             edge="start"

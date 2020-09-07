@@ -14,7 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Link from '@material-ui/core/Link';
+import SLink from '@material-ui/core/Link';
+
 const useStyles = makeStyles((theme) => ({
   bar: {
     backgroundColor: "#568ea6"
@@ -82,7 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavbarPage() {
+export default function NavbarPage(props){
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -120,16 +122,20 @@ export default function NavbarPage() {
     >
 
       <MenuItem onClick={handleMenuClose}>      
-      <Link color="inherit" href="/login">
+      <SLink color="inherit" href="/login">
         Login
-      </Link>
+      </SLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-      <Link color="inherit" href="/register">
+      <SLink color="inherit" href="/register">
         Sign-Up
-      </Link>
+      </SLink>
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <SLink color="inherit" href="/find">
+        Find
+      </SLink>
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );

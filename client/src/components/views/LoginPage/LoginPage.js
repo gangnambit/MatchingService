@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_action/user_action";
 import axios from "axios";
 import SocialLogin from "./SocialLogin";
+import {withRouter} from 'react-router-dom'
 
 function Copyright() {
   return (
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginPage(props) {
+  const LoginPage = (props) => {
   const classes = useStyles();
 
   const rememberMeChecked = localStorage.getItem("rememberme") ? true : false;
@@ -184,3 +185,5 @@ export default function LoginPage(props) {
     </Container>
   );
 }
+
+export default withRouter(LoginPage);
